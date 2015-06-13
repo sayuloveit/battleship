@@ -3,6 +3,16 @@ class Ship
 
   def initialize(hullpoints = nil)
     @hullpoints = hullpoints
+    @float = true
+  end
+
+  def damage
+    @hullpoints -= 1
+  end
+
+  def afloat?
+    @float = false if @hullpoints <= 0
+    @float
   end
 
 end
