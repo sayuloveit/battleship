@@ -12,6 +12,7 @@ class Board
               :row6 => "F", :f1 => " ", :f2 => " ", :f3 => " ", :f4 => " ", :f5 => " ", :f6 => " ", :f7 => " ", :f8 => " ",
               :row7 => "G", :g1 => " ", :g2 => " ", :g3 => " ", :g4 => " ", :g5 => " ", :g6 => " ", :g7 => " ", :g8 => " "
               }
+      @moves = Array.new
   end
 
   def place_ship(ship, coordinate, alignment)
@@ -29,6 +30,20 @@ class Board
     false
   end
 
+  def target(coordinate)
+    #assume coordinate is present on board
+    @moves.push(coordinate.to_sym)
+
+    if hit?(coordinate)
+      # change hullpoints
+      # @board[coordinate.to_sym].hullpoints - 1
+      true
+    else
+      false
+    end
+  end
+
+
   def to_s
     @board.values.each_slice(9).to_a.unshift([' ', '1', '2', '3', '4', '5', '6', '7', '8']).map do |row|
       row.map do |space|
@@ -38,10 +53,10 @@ class Board
 
   end
 
-
   # private
 
-  def ship_coordinates(ship, coordinate, alignment) #determines all coordinates a ship will take up
+  #determines all coordinates a ship will take up
+  def ship_coordinates(ship, coordinate, alignment)
     ship_length = ship.hullpoints
     positions = [coordinate]
 
@@ -66,6 +81,10 @@ class Board
 
   def occupied_coord?(coordinate)
     return true if @board[coordinate] == " "
+  end
+
+  def hit?(coordinate)
+    @board[coordinate.to_sym] != " " ? true : false
   end
 
 end

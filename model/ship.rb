@@ -1,5 +1,5 @@
 class Ship
-  attr_reader :hullpoints
+  attr_accessor :hullpoints
 
   def initialize(hullpoints = nil)
     @hullpoints = hullpoints
