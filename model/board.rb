@@ -1,7 +1,9 @@
+require 'colorize'
 require_relative 'ship'
+require 'pry'
 
 class Board
-
+  attr_reader :board
   def initialize
     @board = {
               :row1 => "A", :a1 => " ", :a2 => " ", :a3 => " ", :a4 => " ", :a5 => " ", :a6 => " ", :a7 => " ", :a8 => " ",
@@ -18,7 +20,7 @@ class Board
   def place_ship(ship, coordinate, alignment)
     coordinates = ship_coordinates(ship, coordinate, alignment).select do |coord|
       valid_coord?(coord)
-    end.map(&:to_sym).select do |coord|
+    end.select do |coord|
       occupied_coord?(coord)
     end
 
@@ -32,13 +34,14 @@ class Board
 
   def target(coordinate)
     #assume coordinate is present on board
-    @moves.push(coordinate.to_sym)
+    @moves.push(coordinate)
 
     if hit?(coordinate)
-      # change hullpoints
-      # @board[coordinate.to_sym].hullpoints - 1
+      @board[coordinate].damage
+      @board[coordinate] = 'X'.red
       true
     else
+      @board[coordinate] = 'O'.white
       false
     end
   end
@@ -57,6 +60,7 @@ class Board
 
   #determines all coordinates a ship will take up
   def ship_coordinates(ship, coordinate, alignment)
+    # binding.pry
     ship_length = ship.hullpoints
     positions = [coordinate]
 
@@ -72,7 +76,7 @@ class Board
       end
     end
 
-    positions
+    positions.map(&:to_sym)
   end
 
   def valid_coord?(coordinate)
@@ -84,7 +88,7 @@ class Board
   end
 
   def hit?(coordinate)
-    @board[coordinate.to_sym] != " " ? true : false
+    @board[coordinate] != " " ? true : false
   end
 
 end
