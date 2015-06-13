@@ -4,6 +4,7 @@ class Ship
   def initialize(hullpoints = nil)
     @hullpoints = hullpoints
   end
+
 end
 
 
