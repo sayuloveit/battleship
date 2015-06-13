@@ -14,7 +14,6 @@ class Board
               :row6 => "F", :f1 => " ", :f2 => " ", :f3 => " ", :f4 => " ", :f5 => " ", :f6 => " ", :f7 => " ", :f8 => " ",
               :row7 => "G", :g1 => " ", :g2 => " ", :g3 => " ", :g4 => " ", :g5 => " ", :g6 => " ", :g7 => " ", :g8 => " "
               }
-      @moves = Array.new
   end
 
   def place_ship(ship, coordinate, alignment)
@@ -34,8 +33,6 @@ class Board
 
   def target(coordinate)
     #assume coordinate is present on board
-    @moves.push(coordinate)
-
     if hit?(coordinate)
       @board[coordinate].damage
       @board[coordinate] = 'X'.red
