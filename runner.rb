@@ -6,26 +6,36 @@ def symbolify(input)
   input.to_sym
 end
 
-#turn position input into symbols
 p1 = Board.new
 
-p_carrier = Carrier.new(player = true)
-p_battleship = Battleship.new(player = true)
-p_cruiser = Cruiser.new(player = true)
-p_submarine = Submarine.new(player = true)
-p_destroyer = Destroyer.new(player = true)
+ships = [Carrier.new(player = true), Battleship.new(player = true), Cruiser.new(player = true), Submarine.new(player = true), Destroyer.new(player = true)]
 
-p1.place_ship(p_carrier, :a2, 'v')
-p1.place_ship(p_battleship, :g1, 'h')
-p1.place_ship(p_cruiser, :a8, 'v')
-p1.place_ship(p_submarine, :e5, 'h')
-p1.place_ship(p_destroyer, :b4, 'h')
+until ships.empty?
+  puts "Your Board"
+  puts p1
 
+  current_ship = ships.shift
+  location = :placeholder
+  alignment = nil
+
+  until p1.place_ship(current_ship, location, alignment)
+    puts "Please give a location and alignment to place your #{current_ship.class}"
+    print "Location: "
+    location = symbolify(gets.chomp)
+    print "Alignment(h = horizonal, v = verticle): "
+    alignment = gets.chomp
+  end
+
+end
 
 
 bill = Bill.new
-b_carrier = Carrier.new
-bill.place_ship(b_carrier, :a2, 'v')
+b_carrier = Carrier.new#(player = true) #uncomment to see Bill's ships
+b_battleship = Battleship.new#(player = true) #uncomment to see Bill's ships
+b_cruiser = Cruiser.new#(player = true) #uncomment to see Bill's ships
+b_submarine = Submarine.new#(player = true) #uncomment to see Bill's ships
+b_destroyer = Destroyer.new#(player = true) #uncomment to see Bill's ships
+bill.place_ships([b_carrier, b_battleship, b_cruiser, b_submarine, b_destroyer])
 
 until p1.game_over? || bill.game_over?
 
