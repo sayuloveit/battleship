@@ -12,7 +12,8 @@ class Board
               :row4 => "D", :d1 => " ", :d2 => " ", :d3 => " ", :d4 => " ", :d5 => " ", :d6 => " ", :d7 => " ", :d8 => " ",
               :row5 => "E", :e1 => " ", :e2 => " ", :e3 => " ", :e4 => " ", :e5 => " ", :e6 => " ", :e7 => " ", :e8 => " ",
               :row6 => "F", :f1 => " ", :f2 => " ", :f3 => " ", :f4 => " ", :f5 => " ", :f6 => " ", :f7 => " ", :f8 => " ",
-              :row7 => "G", :g1 => " ", :g2 => " ", :g3 => " ", :g4 => " ", :g5 => " ", :g6 => " ", :g7 => " ", :g8 => " "
+              :row7 => "G", :g1 => " ", :g2 => " ", :g3 => " ", :g4 => " ", :g5 => " ", :g6 => " ", :g7 => " ", :g8 => " ",
+              :row8 => "H", :h1 => " ", :h2 => " ", :h3 => " ", :h4 => " ", :h5 => " ", :h6 => " ", :h7 => " ", :h8 => " "
               }
   end
 
@@ -84,7 +85,7 @@ class Board
   end
 
   def valid_coord?(coordinate)
-    return true if (('a'..'g').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1]))
+    return true if (('a'..'h').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1]))
   end
 
   def occupied_coord?(coordinate)
