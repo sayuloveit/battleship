@@ -2,11 +2,11 @@ require_relative 'board'
 require 'pry'
 
 class Bill < Board
-  attr_reader :possible_moves, :priority_targets, :last_hit
+  attr_reader :possible_targets, :priority_targets, :last_hit
 
   def initialize
     super
-    @possible_moves = @board.keys.select { |coord| valid_coord?(coord) }.shuffle
+    @possible_targets = @board.keys.select { |coord| valid_coord?(coord) }.shuffle
     @last_hit = nil
     @priority_targets = []
     @hunting = false   #detemines when to stop using priority targets
@@ -16,9 +16,9 @@ class Bill < Board
   def give_target
     if @hunting
       target = @priority_targets.shift
-      @possible_moves.delete(target)
+      @possible_targets.delete(target)
     else
-      @possible_moves.shift
+      @possible_targets.shift
     end
   end
 
@@ -31,17 +31,25 @@ class Bill < Board
         @hunting = true
         if @priority_targets.empty?
           @last_hit = last_target
-          @priority_targets = keen_targets(@last_hit, hullpoints_left).shuffle
+          @priority_targets = possible_targets(@last_hit, hullpoints_left).shuffle
         # else
         #   @last_hit = last_target
         end
       end
   end
 
+  # randomly place ships
+  def place_ships(ships)
+    ships.each do |ship|
+      until place_ship(ship, @possible_targets.sample, ['v', 'h'].sample)
+      end
+    end
+  end
+
   # private
 
   # narrow down coordinates to hit based on info from last hit
-  def keen_targets(hit_coordinate, hullpoints_left)
+  def possible_targets(hit_coordinate, hullpoints_left)
     row = hit_coordinate[0]
     col = hit_coordinate[1].to_i
     result = []
