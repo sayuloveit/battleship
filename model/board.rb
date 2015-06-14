@@ -34,20 +34,24 @@ class Board
   def target(coordinate)
     #assume coordinate is present on board
     if hit?(coordinate)
-      @board[coordinate].damage
+      hullpoints_left = @board[coordinate].damage
       @board[coordinate] = 'X'.red
-      true
+      return hullpoints_left
     else
       @board[coordinate] = 'O'.white
       false
     end
   end
 
+  def game_over?
+    ships_left = @board.values.select { |cell| !cell.kind_of?(String) }.length
+    return true if ships_left == 0
+  end
 
   def to_s
-    @board.values.each_slice(9).to_a.unshift([' ', '1', '2', '3', '4', '5', '6', '7', '8']).map do |row|
+    @board.values.each_slice(9).to_a.unshift([" ", "1", "2", "3", "4", "5", "6", "7", "8"]).map do |row|
       row.map do |space|
-        space.kind_of?(String) ? space.ljust(1) : space
+        space
       end.join("|")
     end.join("\n")
 
