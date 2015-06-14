@@ -1,21 +1,24 @@
 require_relative 'board'
+require 'pry'
 
 class Bill < Board
+  attr_reader :possible_moves, :last_hit, :last_move, :hits, :priority_targets
 
   def initialize
     super
     @possible_moves = @board.keys.select { |coord| valid_coord?(coord) }.shuffle
+    @last_hit = nil
     @last_move = nil
     @hits = []
     @priority_targets = []
   end
 
   def give_target
-    if @hits.length == 1
-      #give next target
-
-    elsif @hits.length == 2
-
+    if @hits.length == 1      #targets area surrounding hit
+      @priority_targets = surrounding_coordinates(@hits[0]).shuffle
+      @possible_moves.delete(@priority_targets.shift)
+    elsif @hits.length >= 2   #makes next hit
+      @possible_moves.delete(next_hit(@hits[-2], @hits[-1]))
     else
       @last_move = @possible_moves.shift
     end
@@ -24,32 +27,34 @@ class Bill < Board
 
   def response(hullpoints_left)
     if hullpoints_left == 0
-      @possible_moves -= (@hits + @priority_targets)
+      @possible_moves -= @hits
       @priority_targets.clear
       @hits.clear
     elsif !!hullpoints_left
-      @hits.push(@last_move)
+      binding.pry
+      @last_hit = @last_move
+      @hits.push(@last_hit)
     else
-
+      nil
     end
   end
 
   # private
 
   #determines next coordinates to target based on hits
-  def priority_targets
-    if @hits.length == 1
-      @priority_targets = surrounding_coordinates(@hits[0])
-    elsif @hits.length >= 2
-
-    end
-  end
+  # def priority_targets
+  #   if @hits.length == 1
+  #     @priority_targets = surrounding_coordinates(@hits[0])
+  #   elsif @hits.length >= 2
+  #     next_hit(@hits[0], @hits[1])
+  #   end
+  # end
 
   def surrounding_coordinates(coordinate)
     x = coordinate[0]
     y = coordinate[1].to_i
 
-    ["#{x}#{y - 1}"  , "#{x.succ}#{y}", "#{x}#{y + 1}", "#{previous_letter(x)}#{y}"].select { |coord| valid_coord?(coord) }.map(&:to_sym)
+    ["#{x}#{y - 1}", "#{x.succ}#{y}", "#{x}#{y + 1}", "#{previous_letter(x)}#{y}"].select { |coord| valid_coord?(coord) }.map(&:to_sym)
   end
 
   def previous_letter(letter)

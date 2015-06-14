@@ -32,12 +32,15 @@ class Board
   end
 
   def target(coordinate)
+    # binding.pry
     #assume coordinate is present on board
     if hit?(coordinate)
+      # binding.pry
       hullpoints_left = @board[coordinate].damage
       @board[coordinate] = 'X'.red
       return hullpoints_left
     else
+      # binding.pry
       @board[coordinate] = 'O'.white
       false
     end

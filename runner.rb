@@ -1,31 +1,56 @@
 require_relative 'model/ship'
 require_relative 'model/board'
 require_relative 'model/bill'
+require 'pry'
 
+def symbolify(input)
+  input.to_sym
+end
 
 #turn position input into symbols
-player_board = Board.new
+p1 = Board.new
 
-player_carrrier = Carrier.new(player = true)
-player_board.place_ship(player_carrrier, :a2, 'v')
-player_board.target(:a1)
-player_board.target(:a2)
+p_carrier = Carrier.new(player = true)
+p_battleship = Battleship.new(player = true)
+p_cruiser = Cruiser.new(player = true)
+p_submarine = Submarine.new(player = true)
+p_destroyer = Destroyer.new(player = true)
 
-puts player_board
+# binding.pry
+p1.place_ship(p_carrier, :a2, 'v')
+p1.place_ship(p_battleship, :g1, 'h')
+p1.place_ship(p_cruiser, :a8, 'v')
+p1.place_ship(p_submarine, :e5, 'h')
+p1.place_ship(p_destroyer, :b4, 'h')
 
-p player_board
 
 
 bill = Bill.new
+b_carrier = Carrier.new
+bill.place_ship(b_carrier, :a2, 'v')
 
-bill_carrier = Carrier.new
-bill.place_ship(bill_carrier, :a2, 'v')
+until p1.game_over? || bill.game_over?
 
-#player hit bill
-bill.target(:a1)
-bill.target(:a3)
-bill.target(:b2)
+  puts "Bill's Board"
+  puts bill
+  puts '-' * 10
+  puts "Your Board"
+  puts p1
 
-puts bill
 
-p bill
+  print "pick a target: "
+  input = gets.chomp
+  bill.target(symbolify(input))
+
+  puts "Bill is thinking..."
+  sleep 1
+
+  target = p1.target(bill.give_target)
+  bill.response(target)
+  puts "bill's target: #{target}"
+  # puts "bill's response: #{bill.response(target)}"
+  puts "bill's last move: #{bill.last_move}"
+  puts "bill's hits: #{bill.hits}"
+  puts "bill's priority targets: #{bill.priority_targets}"
+
+end
