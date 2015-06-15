@@ -93,7 +93,7 @@ class Board
   end
 
   def hit?(coordinate)
-    @board[coordinate] != " " ? true : false
+    !@board[coordinate].kind_of?(String)
   end
 
 end
