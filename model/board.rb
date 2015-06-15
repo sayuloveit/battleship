@@ -85,7 +85,7 @@ class Board
   end
 
   def valid_coord?(coordinate)
-    return true if (('a'..'h').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1]))
+    return true if (('a'..'h').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1..-1]))
   end
 
   def occupied_coord?(coordinate)
