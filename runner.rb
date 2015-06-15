@@ -19,7 +19,7 @@ until ships.empty?
   alignment = nil
 
   until p1.place_ship(current_ship, location, alignment)
-    puts "Please give a location and alignment to place your #{current_ship.class}"
+    puts "Please give a location and alignment to place your #{current_ship.class} (#{current_ship.hullpoints} spaces)"
     print "Location: "
     location = symbolify(gets.chomp)
     print "Alignment(h = horizonal, v = verticle): "
@@ -30,11 +30,11 @@ end
 
 
 bill = Bill.new
-b_carrier = Carrier.new#(player = true) #uncomment to see Bill's ships
-b_battleship = Battleship.new#(player = true) #uncomment to see Bill's ships
-b_cruiser = Cruiser.new#(player = true) #uncomment to see Bill's ships
-b_submarine = Submarine.new#(player = true) #uncomment to see Bill's ships
-b_destroyer = Destroyer.new#(player = true) #uncomment to see Bill's ships
+b_carrier = Carrier.new(player = true) #uncomment to see Bill's ships
+b_battleship = Battleship.new(player = true) #uncomment to see Bill's ships
+b_cruiser = Cruiser.new(player = true) #uncomment to see Bill's ships
+b_submarine = Submarine.new(player = true) #uncomment to see Bill's ships
+b_destroyer = Destroyer.new(player = true) #uncomment to see Bill's ships
 bill.place_ships([b_carrier, b_battleship, b_cruiser, b_submarine, b_destroyer])
 
 until p1.game_over? || bill.game_over?
@@ -59,10 +59,10 @@ until p1.game_over? || bill.game_over?
   bills_target = bill.give_target
   target_result = p1.target(bills_target)
   bill.response(bills_target, target_result)
-  # puts "bill's target: #{bills_target}"
-  # puts "bill's target result: #{target_result}"
-  # puts "bill's last move: #{bill.last_hit}"
-  # puts "bill's priority targets: #{bill.priority_targets}"
+  puts "bill's target: #{bills_target}"
+  puts "bill's target result: #{target_result}"
+  puts "bill's last move: #{bill.last_hit}"
+  puts "bill's priority targets: #{bill.priority_targets}"
 
   winner = "Bill" if p1.game_over?
 

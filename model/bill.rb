@@ -16,7 +16,12 @@ class Bill < Board
   def give_target
     if @hunting
       target = @priority_targets.shift
-      @possible_targets.delete(target)
+      if !!target
+        @possible_targets.delete(target)
+      else
+        @hunting = false
+        @possible_targets.shift
+      end
     else
       @possible_targets.shift
     end
