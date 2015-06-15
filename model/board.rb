@@ -41,9 +41,12 @@ class Board
       @board[coordinate] = 'X'.red
       return hullpoints_left
     else
-      # binding.pry
-      @board[coordinate] = 'O'.white
-      false
+      if @board[coordinate] == 'X'.red
+        true
+      else
+        @board[coordinate] = 'O'.white
+        false
+      end
     end
   end
 
