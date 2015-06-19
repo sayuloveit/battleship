@@ -49,8 +49,8 @@ class Board
   end
 
   def game_over?
-    ships_left = @board.values.select { |cell| !cell.kind_of?(String) }.length
-    return true if ships_left == 0
+    ships_left = @board.values.select { |cell| !cell.nil? && !cell.kind_of?(String) }
+    ships_left.empty?
   end
 
 
