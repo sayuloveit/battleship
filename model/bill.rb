@@ -59,10 +59,9 @@ class Bill < Board
     col = hit_coordinate[1].to_i
     result = []
 
-    result.concat(n_direction_coordinates(hit_coordinate, hullpoints_left, 'u'))
-    result.concat(n_direction_coordinates(hit_coordinate, hullpoints_left, 'd'))
-    result.concat(n_direction_coordinates(hit_coordinate, hullpoints_left, 'l'))
-    result.concat(n_direction_coordinates(hit_coordinate, hullpoints_left, 'r'))
+    ['u', 'd', 'l', 'r'].each do |direction|
+      result.concat(n_direction_coordinates(hit_coordinate, hullpoints_left, direction))
+    end
 
     result.select{ |coord| valid_coord?(coord) }.map(&:to_sym)
   end
