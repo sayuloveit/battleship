@@ -4,17 +4,11 @@ require 'pry'
 
 class Board
   attr_reader :board
+  BOARD_WIDTH = 8
+  BOARD_HEIGHT = 8
+
   def initialize
-    @board = {
-              :row1 => "A", :a1 => " ", :a2 => " ", :a3 => " ", :a4 => " ", :a5 => " ", :a6 => " ", :a7 => " ", :a8 => " ",
-              :row2 => "B", :b1 => " ", :b2 => " ", :b3 => " ", :b4 => " ", :b5 => " ", :b6 => " ", :b7 => " ", :b8 => " ",
-              :row3 => "C", :c1 => " ", :c2 => " ", :c3 => " ", :c4 => " ", :c5 => " ", :c6 => " ", :c7 => " ", :c8 => " ",
-              :row4 => "D", :d1 => " ", :d2 => " ", :d3 => " ", :d4 => " ", :d5 => " ", :d6 => " ", :d7 => " ", :d8 => " ",
-              :row5 => "E", :e1 => " ", :e2 => " ", :e3 => " ", :e4 => " ", :e5 => " ", :e6 => " ", :e7 => " ", :e8 => " ",
-              :row6 => "F", :f1 => " ", :f2 => " ", :f3 => " ", :f4 => " ", :f5 => " ", :f6 => " ", :f7 => " ", :f8 => " ",
-              :row7 => "G", :g1 => " ", :g2 => " ", :g3 => " ", :g4 => " ", :g5 => " ", :g6 => " ", :g7 => " ", :g8 => " ",
-              :row8 => "H", :h1 => " ", :h2 => " ", :h3 => " ", :h4 => " ", :h5 => " ", :h6 => " ", :h7 => " ", :h8 => " "
-              }
+    @board = generate_keys.each_with_object({}) { |key, hash| hash[key] = nil }
   end
 
   def place_ship(ship, coordinate, alignment)
@@ -59,13 +53,9 @@ class Board
     return true if ships_left == 0
   end
 
-  def to_s
-    @board.values.each_slice(9).to_a.unshift([" ", "1", "2", "3", "4", "5", "6", "7", "8"]).map do |row|
-      row.map do |space|
-        space
-      end.join("|")
-    end.join("\n")
 
+  def to_s
+    @board.values.each_slice(BOARD_WIDTH).map(&:join).join("\n")
   end
 
   # private
@@ -92,15 +82,27 @@ class Board
   end
 
   def valid_coord?(coordinate)
-    return true if (('a'..'h').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1..-1]))
+    # return true if (('a'..'h').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1..-1]))
+    ('a'..'h').include?(coordinate[0]) && ('1'..'8').include?(coordinate[1..-1])
   end
 
   def occupied_coord?(coordinate)
-    return true if @board[coordinate] == " "
+    @board[coordinate].nil?
   end
 
   def hit?(coordinate)
-    !@board[coordinate].kind_of?(String)
+    # !@board[coordinate].kind_of?(String)
+
+    !@board[coordinate].nil?
+  end
+
+  # private
+  def generate_keys
+    rows = ('a'..'z').to_a[0...BOARD_WIDTH].map { |i| i * BOARD_WIDTH }.map(&:chars)
+    columns = (('1'..'26').to_a[0...BOARD_HEIGHT] * BOARD_HEIGHT).each_slice(BOARD_HEIGHT).to_a
+    # binding.pry
+
+    rows.flatten.zip(columns.flatten).map(&:join).map(&:to_sym)
   end
 
 end
