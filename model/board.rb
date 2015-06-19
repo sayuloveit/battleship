@@ -8,7 +8,7 @@ class Board
   BOARD_HEIGHT = 8
 
   def initialize
-    @board = generate_keys.each_with_object({}) { |key, hash| hash[key] = nil }
+    @board = generate_coords.each_with_object({}) { |key, hash| hash[key] = nil }
   end
 
   def place_ship(ship, coordinate, alignment)
@@ -96,7 +96,7 @@ class Board
   end
 
   # private
-  def generate_keys
+  def generate_coords
     rows = ('a'..'z').to_a[0...BOARD_WIDTH].map { |i| i * BOARD_WIDTH }.map(&:chars)
     columns = (('1'..'26').to_a[0...BOARD_HEIGHT] * BOARD_HEIGHT).each_slice(BOARD_HEIGHT).to_a
     # binding.pry
