@@ -37,8 +37,6 @@ class Bill < Board
         if @priority_targets.empty?
           @last_hit = last_target
           @priority_targets = possible_targets(@last_hit, hullpoints_left).shuffle
-        # else
-        #   @last_hit = last_target
         end
       end
   end
