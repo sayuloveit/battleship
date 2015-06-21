@@ -31,16 +31,11 @@ class Board
     if hit?(coordinate)
       hullpoints_left = @board[coordinate].damage
       @board[coordinate] = xs
-      return hullpoints_left
+      hullpoints_left
     else
-      if @board[coordinate] == xs
-        true
-      elsif @board[coordinate] == os
-        false
-      else
-        @board[coordinate] = os
-        false
-      end
+      return false if @board[coordinate] == xs || @board[coordinate] == os
+      @board[coordinate] = os
+      false
     end
   end
 
