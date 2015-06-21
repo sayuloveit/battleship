@@ -14,7 +14,7 @@ class Board
   def place_ship(ship, coordinate, alignment)
     coordinates = ship_coordinates(ship, coordinate, alignment).select do |coord|
       valid_coord?(coord)
-    end.select { |coord| occupied_coord?(coord) }
+    end.select { |coord| unoccupied_coord?(coord) }
 
     if coordinates.length == ship.hullpoints
       coordinates.each { |coord| @board[coord] = ship }
@@ -78,7 +78,7 @@ class Board
     ('a'..'z').to_a[0...BOARD_WIDTH].include?(coordinate[0]) && ('1'..'26').to_a[0...BOARD_HEIGHT].include?(coordinate[1..-1])
   end
 
-  def occupied_coord?(coordinate)
+  def unoccupied_coord?(coordinate)
     @board[coordinate].is_a?(String)
   end
 
