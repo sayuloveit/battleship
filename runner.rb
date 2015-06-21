@@ -15,16 +15,14 @@ until ships.empty?
   puts p1
 
   current_ship = ships.shift
-  location = :placeholder
-  alignment = nil
 
-  until p1.place_ship(current_ship, location, alignment)
+  begin
     puts "Please give a location and alignment to place your #{current_ship.class} (#{current_ship.hullpoints} spaces)"
     print "Location: "
     location = symbolify(gets.chomp)
     print "Alignment(h = horizonal, v = verticle): "
     alignment = gets.chomp
-  end
+  end until p1.place_ship(current_ship, location, alignment)
 
 end
 
