@@ -1,6 +1,7 @@
 require_relative 'model/ship'
 require_relative 'model/board'
 require_relative 'model/bill'
+require_relative 'view/view.rb'
 
 class BattleShip
 
@@ -20,6 +21,7 @@ class BattleShip
   def player_setup
     until @player_ships.empty?
       puts "Your Board"
+      # puts View.display_board(@player.to_s)
       puts @player
 
       current_ship = @player_ships.shift
@@ -58,10 +60,11 @@ class BattleShip
       bills_target = @opponent.give_target
       target_result = @player.target(bills_target)
       @opponent.response(bills_target, target_result)
-      puts "bill's target: #{bills_target}"
-      puts "bill's target result: #{target_result}"
-      puts "bill's last move: #{@opponent.last_hit}"
-      puts "bill's priority targets: #{@opponent.priority_targets}"
+      # check
+      # puts "bill's target: #{bills_target}"
+      # puts "bill's target result: #{target_result}"
+      # puts "bill's last move: #{@opponent.last_hit}"
+      # puts "bill's priority targets: #{@opponent.priority_targets}"
 
       winner = "Bill" if @player.game_over?
 

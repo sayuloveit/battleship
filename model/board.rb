@@ -81,7 +81,6 @@ class Board
     !@board[coordinate].is_a?(String)
   end
 
-  # private
   def generate_coords
     rows = ('a'..'z').to_a[0...BOARD_WIDTH].map { |i| i * BOARD_WIDTH }.map(&:chars)
     columns = (('1'..'26').to_a[0...BOARD_HEIGHT] * BOARD_HEIGHT).each_slice(BOARD_HEIGHT).to_a
