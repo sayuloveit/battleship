@@ -8,10 +8,9 @@ module View
     rows = ('A'..'Z').to_a[0..BOARD_HEIGHT]
     cols = (1..26).to_a[0...BOARD_WIDTH]
 
-    display = board_str.chars.each_slice(BOARD_WIDTH).to_a.map do |row|
-      row.unshift(rows.shift)
-    end.map(&:join).join("\n")
-    # binding.pry
+    display = board_str.split("\n").map do |row|
+      "#{rows.shift}" + row
+    end.push(" #{cols.join}").join("\n")
     puts display
   end
 end
