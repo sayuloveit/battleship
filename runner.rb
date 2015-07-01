@@ -21,8 +21,7 @@ class BattleShip
   def player_setup
     until @player_ships.empty?
       puts "Your Board"
-      # puts View.display_board(@player.to_s)
-      puts @player
+      puts View.display_board(@player.to_s)
 
       current_ship = @player_ships.shift
 
@@ -84,15 +83,15 @@ class BattleShip
 end
 
 
-player_ships = [Carrier.new(player = true), Battleship.new(player = true), Cruiser.new(player = true), Submarine.new(player = true), Destroyer.new(player = true)]
+player_ships = [Carrier.new(player: true), Battleship.new(player: true), Cruiser.new(player: true), Submarine.new(player: true), Destroyer.new(player: true)]
 
 
 bill = Bill.new
-b_carrier = Carrier.new(player = true) #uncomment to see Bill's ships
-b_battleship = Battleship.new(player = true) #uncomment to see Bill's ships
-b_cruiser = Cruiser.new(player = true) #uncomment to see Bill's ships
-b_submarine = Submarine.new(player = true) #uncomment to see Bill's ships
-b_destroyer = Destroyer.new(player = true) #uncomment to see Bill's ships
+b_carrier = Carrier.new(player: true) #uncomment to see Bill's ships
+b_battleship = Battleship.new(player: true) #uncomment to see Bill's ships
+b_cruiser = Cruiser.new(player: true) #uncomment to see Bill's ships
+b_submarine = Submarine.new(player: true) #uncomment to see Bill's ships
+b_destroyer = Destroyer.new(player: true) #uncomment to see Bill's ships
 bill.place_ships([b_carrier, b_battleship, b_cruiser, b_submarine, b_destroyer])
 
 
