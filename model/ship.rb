@@ -1,9 +1,9 @@
 class Ship
   attr_accessor :hullpoints
 
-  def initialize(player = nil, hullpoints = nil)
-    @hullpoints = hullpoints
-    @player = player
+  def initialize(args = {})
+    @hullpoints = args.fetch(:hullpoints)
+    @player = args.fetch(:player)
     @float = true
   end
 
@@ -25,7 +25,7 @@ end
 
 class Carrier < Ship
 
-  def initialize(player = nil, hullpoints = 5)
+  def initialize(hullpoints: 5, player: nil)
     super
   end
 
@@ -33,21 +33,21 @@ end
 
 class Battleship < Ship
 
-  def initialize(player = nil, hullpoints = 4)
+  def initialize(hullpoints: 4, player: nil)
     super
   end
 end
 
 class Cruiser < Ship
 
-  def initialize(player = nil, hullpoints = 3)
+  def initialize(hullpoints: 3, player: nil)
     super
   end
 end
 
 class Submarine < Ship
 
-  def initialize(player = nil, hullpoints = 3)
+  def initialize(hullpoints: 3, player: nil)
     super
   end
 
@@ -55,7 +55,7 @@ end
 
 class Destroyer < Ship
 
-  def initialize(player = nil, hullpoints = 2)
+  def initialize(hullpoints: 2, player: nil)
     super
   end
 
