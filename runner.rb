@@ -42,17 +42,9 @@ class BattleShip
     until @player.game_over? || @opponent.game_over?
 
       puts "Bill's Board"
-<<<<<<< HEAD
       View.display_board(@opponent.to_s)
       puts '-' * 10
       puts "Your Board"
-=======
-      # puts @opponent
-      View.display_board(@opponent.to_s)
-      puts '-' * 10
-      puts "Your Board"
-      # puts @player
->>>>>>> ba1fc6bdaeb9c5b4586c4948731c6a3dd80aff78
       View.display_board(@player.to_s)
 
       print "pick a target: "
