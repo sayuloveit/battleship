@@ -2,6 +2,11 @@ require_relative 'board'
 require_relative '../module/module'
 require 'pry'
 
+#to dos
+#make sure bill does not taget the same spot twice
+#make sure already targeted coordinates gets filtered out of bill's priority targets
+#enchance bill's targeting logic
+
 class Bill < Board
   include CoordinateCheck
   attr_reader :possible_targets, :priority_targets, :last_hit
