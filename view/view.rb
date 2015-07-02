@@ -20,9 +20,9 @@ module View
 
   def self.add_color(coord)
     if coord == 'X'
-      'X'.red
+      coord.red
     elsif coord == 'O'
-      'O'.white
+      coord.white
     else
       coord
     end

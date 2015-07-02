@@ -17,7 +17,7 @@ class Ship
   end
 
   def to_s
-    @player ? "S".blue : " "
+    @player ? 'S'.blue : ' '
   end
 
 end

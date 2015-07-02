@@ -1,7 +1,9 @@
 require_relative 'board'
+require_relative '../module/module'
 require 'pry'
 
 class Bill < Board
+  include CoordinateCheck
   attr_reader :possible_targets, :priority_targets, :last_hit
 
   def initialize

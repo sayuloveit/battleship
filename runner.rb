@@ -2,8 +2,10 @@ require_relative 'model/ship'
 require_relative 'model/board'
 require_relative 'model/bill'
 require_relative 'view/view.rb'
+require_relative 'module/module'
 
 class BattleShip
+  include CoordinateCheck
 
   def initialize(args = {})
     @player_ships = args.fetch(:player_ships)

@@ -1,10 +1,12 @@
 require_relative 'ship'
+require_relative '../module/module'
 require 'pry'
 
 class Board
+  include CoordinateCheck
   attr_reader :board
-  BOARD_WIDTH = 8
-  BOARD_HEIGHT = 8
+  # BOARD_WIDTH = 8
+  # BOARD_HEIGHT = 8
   HIT = 'X'
   MISS = 'O'
 
@@ -66,10 +68,6 @@ class Board
     end
 
     positions.map(&:to_sym)
-  end
-
-  def valid_coord?(coordinate)
-    ('a'..'z').to_a[0...BOARD_WIDTH].include?(coordinate[0]) && ('1'..'26').to_a[0...BOARD_HEIGHT].include?(coordinate[1..-1])
   end
 
   def unoccupied_coord?(coordinate)
