@@ -39,7 +39,7 @@ class BattleShip
   end
 
   def turns
-    until @player.game_over? || @opponent.game_over?
+    until @player.game_over? || @opponent.board.game_over?
 
       puts "Bill's Board"
       View.display_board(@opponent.to_s)
@@ -49,10 +49,10 @@ class BattleShip
 
       print "pick a target: "
       input = gets.chomp
-      @opponent.target(symbolify(input))
+      @opponent.board.target(symbolify(input))
 
 
-      winner = "You" if @opponent.game_over?
+      winner = "You" if @opponent.board.game_over?
 
 
       puts "Bill is thinking..."
@@ -88,7 +88,7 @@ end
 player_ships = [Carrier.new(player: true), Battleship.new(player: true), Cruiser.new(player: true), Submarine.new(player: true), Destroyer.new(player: true)]
 
 
-bill = Bill.new
+bill = Bill.new(board: Board.new)
 b_carrier = Carrier.new(player: true) #uncomment to see Bill's ships
 b_battleship = Battleship.new(player: true) #uncomment to see Bill's ships
 b_cruiser = Cruiser.new(player: true) #uncomment to see Bill's ships

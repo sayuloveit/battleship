@@ -7,13 +7,13 @@ require 'pry'
 #make sure already targeted coordinates gets filtered out of bill's priority targets
 #enchance bill's targeting logic
 
-class Bill < Board
+class Bill
   include CoordinateCheck
-  attr_reader :possible_targets, :priority_targets, :last_hit
+  attr_reader :possible_targets, :priority_targets, :last_hit, :board
 
-  def initialize
-    super
-    @possible_targets = @board.keys.select { |coord| valid_coord?(coord) }.shuffle
+  def initialize(args = {})
+    @board = args.fetch(:board)
+    @possible_targets = @board.board.keys.select { |coord| valid_coord?(coord) }.shuffle
     @last_hit = nil
     @priority_targets = []
     @hunting = false   #detemines when to stop using priority targets
@@ -51,9 +51,13 @@ class Bill < Board
   # randomly place ships
   def place_ships(ships)
     ships.each do |ship|
-      until place_ship(ship, @possible_targets.sample, ['v', 'h'].sample)
+      until @board.place_ship(ship, @possible_targets.sample, ['v', 'h'].sample)
       end
     end
+  end
+
+  def to_s
+    @board.to_s
   end
 
   # private
