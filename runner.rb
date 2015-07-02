@@ -21,7 +21,7 @@ class BattleShip
   def player_setup
     until @player_ships.empty?
       puts "Your Board"
-      puts View.display_board(@player.to_s)
+      View.display_board(@player.to_s)
 
       current_ship = @player_ships.shift
 
@@ -40,10 +40,10 @@ class BattleShip
     until @player.game_over? || @opponent.game_over?
 
       puts "Bill's Board"
-      puts @opponent
+      View.display_board(@opponent.to_s)
       puts '-' * 10
       puts "Your Board"
-      puts @player
+      View.display_board(@player.to_s)
 
       print "pick a target: "
       input = gets.chomp

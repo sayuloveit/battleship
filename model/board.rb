@@ -1,4 +1,3 @@
-require 'colorize'
 require_relative 'ship'
 require 'pry'
 
@@ -6,6 +5,8 @@ class Board
   attr_reader :board
   BOARD_WIDTH = 8
   BOARD_HEIGHT = 8
+  HIT = 'X'
+  MISS = 'O'
 
   def initialize
     @board = generate_coords.each_with_object({}) { |key, hash| hash[key] = ' ' }
@@ -25,16 +26,14 @@ class Board
   end
 
   def target(coordinate)
-    xs = 'X'.red
-    os = 'O'.white
     #assume coordinate is present on board
     if hit?(coordinate)
       hullpoints_left = @board[coordinate].damage
-      @board[coordinate] = xs
+      @board[coordinate] = HIT
       hullpoints_left
     else
-      return false if @board[coordinate] == xs || @board[coordinate] == os
-      @board[coordinate] = os
+      return false if @board[coordinate] == HIT || @board[coordinate] == MISS
+      @board[coordinate] = MISS
       false
     end
   end
