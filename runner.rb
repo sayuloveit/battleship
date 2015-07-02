@@ -21,20 +21,27 @@ class BattleShip
 
 
   def player_setup
-    until @player_ships.empty?
-      puts "Your Board"
-      View.display_board(@player.to_s)
+    @player.place_ship(@player_ships[0], 'a1', 'v')
+    @player.place_ship(@player_ships[1], 'h2', 'h')
+    @player.place_ship(@player_ships[2], 'b8', 'v')
+    @player.place_ship(@player_ships[3], 'f2', 'h')
+    @player.place_ship(@player_ships[4], 'a5', 'v')
 
-      current_ship = @player_ships.shift
 
-      begin
-        puts "Please give a location and alignment to place your #{current_ship.class} (#{current_ship.hullpoints} spaces)"
-        print "Location: "
-        location = symbolify(gets.chomp)
-        print "Alignment(h = horizonal, v = verticle): "
-        alignment = gets.chomp
-      end until @player.place_ship(current_ship, location, alignment)
-    end
+    # until @player_ships.empty?
+    #   puts "Your Board"
+    #   View.display_board(@player.to_s)
+
+    #   current_ship = @player_ships.shift
+
+    #   begin
+    #     puts "Please give a location and alignment to place your #{current_ship.class} (#{current_ship.hullpoints} spaces)"
+    #     print "Location: "
+    #     location = symbolify(gets.chomp)
+    #     print "Alignment(h = horizonal, v = verticle): "
+    #     alignment = gets.chomp
+    #   end until @player.place_ship(current_ship, location, alignment)
+    # end
 
   end
 
