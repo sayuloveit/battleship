@@ -66,12 +66,14 @@ class BattleShip
       sleep 1
 
       bills_target = @opponent.give_target
+      puts bills_target
       target_result = @player.target(bills_target)
       @opponent.response(bills_target, target_result)
       # check
       puts "bill's target: #{bills_target}"
       puts "bill's target result: #{target_result}"
-      puts "bill's last move: #{@opponent.last_hit}"
+      puts "bill's last hit: #{@opponent.last_hits}"
+      puts "bill's hunting status: #{@opponent.hunting}"
       puts "bill's priority targets: #{@opponent.priority_targets}"
 
       winner = "Bill" if @player.game_over?
