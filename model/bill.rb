@@ -3,55 +3,63 @@ require_relative '../module/module'
 require 'pry'
 
 #to dos
-#make sure bill does not taget the same spot twice
-#make sure already targeted coordinates gets filtered out of bill's priority targets
-#enchance bill's targeting logic
+#make Bill stop target the other direction once there is a miss while hunting
 
 class Bill
   include CoordinateCheck
-  attr_reader :possible_targets, :priority_targets, :last_hit, :board
+  attr_reader :possible_targets, :priority_targets, :last_hits, :board, :hunting
 
   def initialize(args = {})
     @board = args.fetch(:board)
-    @possible_targets = @board.board.keys.select { |coord| valid_coord?(coord) }.shuffle
-    @last_hit = nil
+    @all_targets = @board.board.keys.select { |coord| valid_coord?(coord) }.shuffle
+    @last_hits = []
     @priority_targets = []
+    @possible_targets = []
     @hunting = false   #detemines when to stop using priority targets
   end
 
   # gives a target and remove it from possible moves
   def give_target
     if @hunting
-      target = @priority_targets.shift
-      if !!target
-        @possible_targets.delete(target)
-      else
+      target = @priority_targets.first
+      if target.nil?
         @hunting = false
-        @possible_targets.shift
+        target = @all_targets.first
       end
     else
-      @possible_targets.shift
+      target = @all_targets.first
     end
+
+    target
   end
 
 
   def response(last_target, hullpoints_left)
       if hullpoints_left == 0
-        @hunting = false
+        @last_hits.clear
         @priority_targets.clear
-      elsif !!hullpoints_left
+        @possible_targets.clear
+        @hunting = false
+      elsif !!hullpoints_left && @last_hits.length == 0
+        @last_hits << last_target
+        @priority_targets = possible_targets(last_target, 1).shuffle
+        @possible_targets = possible_targets(last_target, hullpoints_left)
         @hunting = true
-        if @priority_targets.empty?
-          @last_hit = last_target
-          @priority_targets = possible_targets(@last_hit, hullpoints_left).shuffle
-        end
+      elsif !!hullpoints_left && @last_hits.length == 1
+        @last_hits << last_target
+        @priority_targets = col_or_row_filter(@last_hits, @possible_targets)
+      elsif !!hullpoints_left
+        @last_hits << last_target
       end
+
+      @priority_targets.delete(last_target)
+      @all_targets.delete(last_target)
   end
 
   # randomly place ships
   def place_ships(ships)
     ships.each do |ship|
-      until @board.place_ship(ship, @possible_targets.sample, ['v', 'h'].sample)
+      until @board.place_ship(ship, @all_targets.sample, ['v', 'h'].sample)
       end
     end
   end
@@ -72,7 +80,7 @@ class Bill
       result.concat(n_direction_coordinates(hit_coordinate, hullpoints_left, direction))
     end
 
-    result.select{ |coord| valid_coord?(coord) }.map(&:to_sym)
+    result.select{ |coord| valid_coord?(coord) && @all_targets.include?(coord.to_sym) }.map(&:to_sym)
   end
 
   def previous_letter(letter)
@@ -100,6 +108,18 @@ class Bill
     result = [next_coordinate(coordinate, direction)]
     (n - 1).times { result << next_coordinate(result[-1], direction) }
     result
+  end
+
+  # takes in two consecutive row or col coordinates, filters coordinates
+  # that are not in the same column or row
+  def col_or_row_filter(two_consec_coords, coords_to_filter)
+    coord1, coord2 = two_consec_coords
+
+    if coord1[0] == coord2[0]     #same row
+      coords_to_filter.select { |coord| coord[0] == coord1[0] && @all_targets.include?(coord) }
+    elsif coord1[1] == coord2[1]  #same col
+      coords_to_filter.select { |coord| coord[1] == coord1[1] && @all_targets.include?(coord) }
+    end
   end
 
 
