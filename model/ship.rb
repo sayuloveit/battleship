@@ -1,5 +1,5 @@
 class Ship
-  attr_accessor :hullpoints
+  attr_reader :hullpoints
 
   def initialize(args = {})
     @hullpoints = args.fetch(:hullpoints)
