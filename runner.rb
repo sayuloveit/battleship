@@ -21,27 +21,27 @@ class BattleShip
 
 
   def player_setup
-    @player.place_ship(@player_ships[0], 'a1', 'v')
-    @player.place_ship(@player_ships[1], 'h2', 'h')
-    @player.place_ship(@player_ships[2], 'b8', 'v')
-    @player.place_ship(@player_ships[3], 'f2', 'h')
-    @player.place_ship(@player_ships[4], 'a5', 'v')
+    # @player.place_ship(@player_ships[0], 'a1', 'v')
+    # @player.place_ship(@player_ships[1], 'h2', 'h')
+    # @player.place_ship(@player_ships[2], 'b8', 'v')
+    # @player.place_ship(@player_ships[3], 'f2', 'h')
+    # @player.place_ship(@player_ships[4], 'a5', 'v')
 
 
-    # until @player_ships.empty?
-    #   puts "Your Board"
-    #   View.display_board(@player.to_s)
+    until @player_ships.empty?
+      puts "Your Board"
+      View.display_board(@player.to_s)
 
-    #   current_ship = @player_ships.shift
+      current_ship = @player_ships.shift
 
-    #   begin
-    #     puts "Please give a location and alignment to place your #{current_ship.class} (#{current_ship.hullpoints} spaces)"
-    #     print "Location: "
-    #     location = symbolify(gets.chomp)
-    #     print "Alignment(h = horizonal, v = verticle): "
-    #     alignment = gets.chomp
-    #   end until @player.place_ship(current_ship, location, alignment)
-    # end
+      begin
+        puts "Please give a location and alignment to place your #{current_ship.class} (#{current_ship.hullpoints} spaces)"
+        print "Location: "
+        location = symbolify(gets.chomp)
+        print "Alignment(h = horizonal, v = verticle): "
+        alignment = gets.chomp
+      end until @player.place_ship(current_ship, location, alignment)
+    end
 
   end
 
@@ -69,12 +69,12 @@ class BattleShip
       puts bills_target
       target_result = @player.target(bills_target)
       @opponent.response(bills_target, target_result)
-      # check
-      puts "bill's target: #{bills_target}"
-      puts "bill's target result: #{target_result}"
-      puts "bill's last hit: #{@opponent.last_hits}"
-      puts "bill's hunting status: #{@opponent.hunting}"
-      puts "bill's priority targets: #{@opponent.priority_targets}"
+      ### checks
+      # puts "bill's target: #{bills_target}"
+      # puts "bill's target result: #{target_result}"
+      # puts "bill's last hit: #{@opponent.last_hits}"
+      # puts "bill's hunting status: #{@opponent.hunting}"
+      # puts "bill's priority targets: #{@opponent.priority_targets}"
 
       winner = "Bill" if @player.game_over?
 
@@ -98,11 +98,11 @@ player_ships = [Carrier.new(player: true), Battleship.new(player: true), Cruiser
 
 
 bill = Bill.new(board: Board.new)
-b_carrier = Carrier.new(player: true) #uncomment to see Bill's ships
-b_battleship = Battleship.new(player: true) #uncomment to see Bill's ships
-b_cruiser = Cruiser.new(player: true) #uncomment to see Bill's ships
-b_submarine = Submarine.new(player: true) #uncomment to see Bill's ships
-b_destroyer = Destroyer.new(player: true) #uncomment to see Bill's ships
+b_carrier = Carrier.new#(player: true) #uncomment to see Bill's ships
+b_battleship = Battleship.new#(player: true) #uncomment to see Bill's ships
+b_cruiser = Cruiser.new#(player: true) #uncomment to see Bill's ships
+b_submarine = Submarine.new#(player: true) #uncomment to see Bill's ships
+b_destroyer = Destroyer.new#(player: true) #uncomment to see Bill's ships
 bill.place_ships([b_carrier, b_battleship, b_cruiser, b_submarine, b_destroyer])
 
 
